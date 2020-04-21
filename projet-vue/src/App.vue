@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-      <router-link tag="li" class="col" class-active="active" to="/">Acceuil</router-link>
-      <router-link tag="li" class="col" class-active="active" to="/graphiques">Voir les graphiques</router-link>
-      <router-link tag="li" class="col" class-active="active" to="/piscine">Voir la piscine</router-link>
-      <router-link tag="li" class="col" class-active="active" to="/poulailler">Voir le poulailler</router-link>
-      <router-link tag="li" class="col" class-active="active" v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
+    <router-link class="nav" to="/">Se connecter</router-link>
+    <router-link class="nav" v-if="authenticated" to="/accueil">Acceuil</router-link>
+    <router-link class="nav" v-if="authenticated" to="/graphiques">Voir les graphiques</router-link>
+    <router-link class="nav" v-if="authenticated" to="/piscine">Voir la piscine</router-link>
+    <router-link class="nav" v-if="authenticated" to="/poulailler">Voir le poulailler</router-link>
+    <router-link class="nav" v-if="authenticated" to="/" v-on:click.native="logout()" replace>Logout</router-link>
     
     <router-view @authenticated="setAuthenticated" />
 
@@ -18,9 +19,9 @@
         data() {
             return {
                 authenticated: false,
-                mockAccount: {
+                identifiants: {
                     username: "test",
-                    password: "admin"
+                    password: "test"
                 }
             }
         },
@@ -51,11 +52,7 @@
   margin-top: 60px;
 }
 
- nav li:hover,
- nav li.router-link-active,
- nav li.router-link-exact-active {
-   background-color: indianred;
-   cursor: pointer;
-   padding: 100px;
+ nav {
+    padding: 100px;
  }
 </style>

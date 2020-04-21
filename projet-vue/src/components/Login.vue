@@ -20,14 +20,18 @@
         },
         methods: {
             login() {
+                //Si l'utilisateur remplit les champs identifiants
                 if(this.input.username != "" && this.input.password != "") {
-                    if(this.input.username == this.$parent.mockAccount.username && this.input.password == this.$parent.mockAccount.password) {
+                    //Si les identifiants sont bons
+                    if(this.input.username == this.$parent.identifiants.username && this.input.password == this.$parent.identifiants.password) {
                         this.$emit("authenticated", true);
                         this.$router.replace({ name: "Accueil" });
                     } else {
-                    console.log("Identifiants incorrect !");
+                        console.log("Mot de passe incorrect !");
+                        alert("Mot de passe incorrect !");
                     }
                 } else {
+                    alert("Veuillez renseigner vos identifiants");
                     console.log("Veuillez renseigner vos identifiants");
                 }
             }
