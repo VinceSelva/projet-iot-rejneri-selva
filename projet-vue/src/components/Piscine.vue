@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1> Bienvenue sur la piscddine </h1>
+    <h1> Bienvenue sur la piscine </h1>
 
       <div class="contentPiscine">
         <p>Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. 
@@ -120,9 +120,6 @@ export default {
 </script>
 
 <style>
-*{
-}
-
 
 h1{
   font-size: 40px;

@@ -9,6 +9,7 @@ import Accueil from "./components/Accueil.vue"
 import Piscine from "./components/Piscine.vue"
 import Graphiques from "./components/Graphiques.vue"
 import Poulailler from "./components/Poulailler.vue"
+import Login from "./components/Login.vue"
 
 Vue.use(HighchartsVue);
 Vue.use(VueMaterial);
@@ -19,7 +20,7 @@ const router = new VueRouter({
   routes:[
     {
       path: '/',
-      component: Accueil
+      component: Login
     },
     {
       path: '/piscine',
@@ -33,6 +34,10 @@ const router = new VueRouter({
       path: '/poulailler',
       component: Poulailler
     },
+    {
+      path: "/accueil",
+      component: Accueil
+  },
   ],
   mode:'history'
 });
