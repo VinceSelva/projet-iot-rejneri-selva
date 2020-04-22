@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <router-link class="nav" to="/">Se connecter</router-link>
     <router-link class="nav" v-if="authenticated" to="/accueil">Acceuil</router-link>
     <router-link class="nav" v-if="authenticated" to="/graphiques">Voir les graphiques</router-link>
     <router-link class="nav" v-if="authenticated" to="/piscine">Voir la piscine</router-link>
@@ -27,7 +26,7 @@
         },
         mounted() {
             if(!this.authenticated) {
-                this.$router.replace({ name: "Login" });
+                this.$router.replace({ name: "" });
             }
         },
         methods: {

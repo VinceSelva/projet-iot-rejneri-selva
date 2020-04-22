@@ -1,9 +1,18 @@
 <template>
     <div id="login">
         <h1>Login</h1>
-        <input type="text" name="username" v-model="input.username" placeholder="Nom d'utilisateur" />
-        <input type="password" name="password" v-model="input.password" placeholder="Mot de passe" />
-        <button type="button" v-on:click="login()">Login</button>
+
+            <md-field>
+                <label>Nom d'utilisateur</label>
+                <md-input v-model="input.username"></md-input>
+            </md-field>
+
+            <md-field>
+                <label>Mot de passe</label>
+                <md-input type="password" v-model="input.password"></md-input>
+            </md-field>  
+
+            <md-button class="md-primary md-raised" v-on:click="login()">Connexion</md-button>
     </div>
 </template>
 
@@ -31,8 +40,8 @@
                         alert("Mot de passe incorrect !");
                     }
                 } else {
-                    alert("Veuillez renseigner vos identifiants");
-                    console.log("Veuillez renseigner vos identifiants");
+                    alert("Veuillez renseigner vos identifiants !");
+                    console.log("Veuillez renseigner vos identifiants !");
                 }
             }
         }
@@ -48,4 +57,5 @@
         margin-top: 200px;
         padding: 20px;
     }
+    
 </style>
