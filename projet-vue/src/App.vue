@@ -6,7 +6,7 @@
       <router-link class="md-title nav" v-if="authenticated" to="/poulailler">Voir le poulailler</router-link>
       <router-link class="md-title nav" v-if="authenticated" to="/graphiques">Voir les graphiques</router-link>
       <h3 class="nav-right2" v-if="authenticated" v-on:click="test()">Bonjour {{ identifiants.username }}</h3>
-      <!--<router-link class="md-title nav-right1" v-if="authenticated" to="/" v-on:click.native="logout()" replace>Se déconnecter</router-link>-->
+      <router-link class="md-title nav-right1" v-if="authenticated" to="/" v-on:click.native="logout()" replace>Se déconnecter</router-link>
     </md-toolbar>
     <router-view @authenticated="setAuthenticated" />
   </div>
@@ -57,6 +57,7 @@
 
 h1{
   font-size: 40px;
+  padding-top:50px;
 }
 
 .md-toolbar{
@@ -72,10 +73,10 @@ h1{
 }
 
 .nav-right1 {
-    margin-left: 46% !important;
+    margin-left: 20% !important;
  }
  .nav-right2 {
-    margin-left: 46% !important;
+    margin-left: 20% !important;
     cursor: pointer;
  }
  
