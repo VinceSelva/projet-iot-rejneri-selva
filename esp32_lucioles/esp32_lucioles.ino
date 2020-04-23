@@ -1,5 +1,5 @@
 /*
- * Auteur : G.Menez
+ * Auteur : Rejneri Clement - Selva Vincent
  */
 #include <WiFi.h>
 #include <PubSubClient.h>
@@ -128,7 +128,7 @@ void rejoindre_flotte(){
   
   payload = "{\"who\": \"";
   payload += WiFi.macAddress();
-  payload += "\", \"value\": \"Maxime\"" ;
+  payload += "\", \"value\": \"VincentClement\"" ;
   payload += "}";
   
   payload.toCharArray(data, (payload.length() + 1)); // Convert String payload to a char array

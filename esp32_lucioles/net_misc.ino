@@ -12,11 +12,13 @@ void print_ip_status(){
 
 void connect_wifi(){
  // Access Point of the infrastructure
- //const char* ssid = "HUAWEI-6EC2";
- //const char *password= "FGY9MLBL"; 
- //const char* ssid = "HUAWEI-553A";
- const char* ssid = "Livebox-A39A";
- const char *password= "weow92uZyatXbyvVKA";
+  //WiFi Vincent
+  const char* ssid = "Livebox-A39A";
+  const char *password= "weow92uZyatXbyvVKA";
+
+ //WiFi Clément
+ //const char* ssid = "Livebox-529C";
+ //const char *password= "2C3F4351F5292A3E561562DE6C";
  Serial.println("\nConnecting Wifi to ");
  Serial.println(ssid);
  

@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       states: [],
-      node_url: "http://51.83.77.127:3000",
+      node_url: "http://localhost:3000",
       which_esps: [
         "30:AE:A4:86:C3:20",
         "30:AE:A4:86:CA:7C",
@@ -94,7 +94,7 @@ export default {
       }
     },
     getStates(path_on_node, serie, wh) {
-      this.node_url = "http://51.83.77.127:3000";
+      this.node_url = "http://localhost:3000";
 
       //https://openclassrooms.com/fr/courses/1567926-un-site-web-dynamique-avec-jquery/1569648-le-fonctionnement-de-ajax
       var liste = [];

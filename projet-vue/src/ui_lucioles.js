@@ -1,9 +1,3 @@
-//
-// Cote UI de l'application "lucioles"
-//
-// Auteur : G.MENEZ
-// RMQ : Manipulation naive (debutant) de Javascript
-// 
 let node_url = 'http://localhost:3000';
 window.onload = function init() {
 
@@ -106,25 +100,33 @@ window.onload = function init() {
                 },
                 enableMouseTracking: true
             }
+
         }
     });
 
     //=== Recuperation dans le Node JS server des samples de l'ESP et 
     //=== Alimentation des charts ====================================
-    
-    function get_samples(path_on_node, serie, wh){
 
+    function lastValue(path, val){
+        if(path == "/esp/temp")
+        document.getElementById("temp").innerHTML = "La Température est de " + val + "°C";
+        if(path == "/esp/light")
+        document.getElementById("light").innerHTML = "La Lumiere est de " + val + " lumen";
+
+    }
+    function get_samples(path_on_node, serie, wh){
+        node_url = 'http://localhost:3000'
         $.ajax({
             url: node_url.concat(path_on_node), // URL to "GET" : /esp/temp ou /esp/light
             type: 'GET',
             headers: { Accept: "application/json", },
-	    data: {"who": wh}, // parameter of the GET request
+        data: {"who": wh}, // parameter of the GET request
             success: function (resultat, statut) { // Anonymous function on success
                 let listeData = [];
                 resultat.forEach(function (element) {
             listeData.push([Date.parse(element.date),element.value]);
 
-		    //listeData.push([Date.now(),element.value]);
+            //listeData.push([Date.now(),element.value]);
                 });
                 serie.setData(listeData); //serie.redraw();
             },
@@ -133,8 +135,38 @@ window.onload = function init() {
             complete: function (resultat, statut) {
             }
         });
-
     }
+
+          /*  function get_samples(path_on_node, serie, wh){
+            node_url = 'http://localhost:3000'
+
+            $.ajax({
+                    url: node_url.concat(path_on_node), // URL to "GET" : /esp/temp ou /esp/light ou /esp/hum
+                    type: 'GET',
+                    headers: { Accept: "application/json", },
+                    data: {"who": wh}, // parameter of the GET request
+                    success: function (resultat, statut) { // Anonymous function on success
+                        let listeData = [];
+                        resultat.forEach(function (element) {
+                    listeData.push([Date.parse(element.date),element.value]);
+                        });
+                        serie.setData(listeData);
+                        lastValue(path_on_node,(listeData[(listeData.length - 1)][1]));
+                    },
+                    error: function (resultat, statut, erreur) {
+                    },
+                    complete: function (resultat, statut) {
+                    }
+
+                });
+
+
+            }*/
+
+
+
+
+
 
 
 
@@ -190,4 +222,3 @@ window.onload = function init() {
 
 
 };
-

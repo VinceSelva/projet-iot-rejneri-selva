@@ -12,7 +12,7 @@ const TOPIC_LED = 'm/sensors/led'
 const TOPIC_FLOTTE = 'm/flotte'
 
 
-// express 
+// express
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -31,31 +31,32 @@ app.use(function (request, response, next) { //Pour eviter les problemes de CORS
 var mongodb = require('mongodb');
 const mongoBaseName = "lucioles"                   // Nom de la base
 //const uri = 'mongodb://localhost:27017/'; //URL de connection
-//const uri = 'mongodb://10.9.128.189:27017/'; //URL de connection		
-const uri = "mongodb+srv://vincenzo:clementvincent1373@cluster0-eosau.mongodb.net/test";
+//const uri = 'mongodb://10.9.128.189:27017/'; //URL de connection
+//const uri = "mongodb+srv://vincenzo:clementvincent1373@cluster0-eosau.mongodb.net/test";
+const uri = "mongodb://vincenzo:clementvincent1373@cluster0-shard-00-00-ipalw.gcp.mongodb.net:27017,cluster0-shard-00-01-ipalw.gcp.mongodb.net:27017,cluster0-shard-00-02-ipalw.gcp.mongodb.net:27017/test?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true";
 
 
 const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Connection a la DB MongoDB 
+// Connection a la DB MongoDB
 client.connect(function (err, mongodbClient) {
-	if (err) throw err; // If connection to DB failed ... 
+	if (err)  console.log("pas connexion"); // If connection to DB failed ...
 	// else we get a "db" engine reference
 
-	//===============================================    
+	//===============================================
 	// Get a connection to the DB "lucioles" or create
 	//
 	var dbo = client.db(mongoBaseName);
 
 
 	dbo.collection('temp').deleteMany({}, function (err, delOK) {
-		if (err) throw err;
+		if (err) console.log("pas de co");
 		if (delOK) console.log("Collection deleted");
 	});
 
 	dbo.collection('light').deleteMany({}, function (err, delOK) {
-		if (err) throw err;
+		if (err) console.log("pas de co");
 		if (delOK) console.log("Collection deleted");
 	});
 
@@ -74,7 +75,7 @@ client.connect(function (err, mongodbClient) {
 	var client_mqtt = mqtt.connect(mqtt_url);
 
 	//===============================================
-	// Des la connection, le serveur NodeJS s'abonne aux topics MQTT 
+	// Des la connection, le serveur NodeJS s'abonne aux topics MQTT
 	//
 	client_mqtt.on('connect', function () {
 		client_mqtt.subscribe(TOPIC_LIGHT, function (err) {
@@ -112,25 +113,25 @@ client.connect(function (err, mongodbClient) {
 		const flotte = await dbo.collection('flotte').find({}).toArray();
 		const topicname = path.parse(topic.toString()).base;
 
-		// Parsing du message suppos� recu au format JSON
+		// Parsing du message supposé recu au format JSON
 		message = JSON.parse(message);
 		wh = message.who
 		val = message.value
 
 		if (flotte.findIndex(object => object.who == wh) !== -1 || topicname === "flotte") {
 
-			// Debug : Gerer une liste de who pour savoir qui utilise le node server	
+			// Debug : Gerer une liste de who pour savoir qui utilise le node server
 			let wholist = []
 			var index = wholist.findIndex(x => x.who == wh)
 			if (index === -1) {
 				wholist.push({ who: wh });
 			}
 			//	console.log("wholist using the node server :", wholist);
-			//var frTime = new Date().toLocaleString("fr-FR", {timeZone: "Europe/Paris"});
-			var frTime = new Date().toLocaleString("sv-SE", { timeZone: "Europe/Paris" });
+			var frTime = new Date().toLocaleString("fr-FR", {timeZone: "Europe/Paris"});
+			//var frTime = new Date().toLocaleString("sv-SE", { timeZone: "Europe/Paris" });
 			var new_entry = {
-				date: frTime, // timestamp the value 
-				who: wh,      // identify ESP who provide 
+				date: frTime, // timestamp the value
+				who: wh,      // identify ESP who provide
 				value: val    // this value
 			};
 
@@ -143,11 +144,11 @@ client.connect(function (err, mongodbClient) {
 				console.log(new_entry);
 			});
 
-			// Debug : voir les collections de la DB 
+			// Debug : voir les collections de la DB
 			dbo.listCollections().toArray(function (err, collInfos) {
 				// collInfos is an array of collection info objects that look like:
 				// { name: 'test', options: {} }
-				// console.log("\nList of collections currently in DB: ", collInfos); 
+				// console.log("\nList of collections currently in DB: ", collInfos);
 			});
 		}
 	}) // end of 'message' callback installation
@@ -174,10 +175,10 @@ client.connect(function (err, mongodbClient) {
 	})
 
 	app.post('/flotte', function (req, res) {
-		var frTime = new Date().toLocaleString("sv-SE", { timeZone: "Europe/Paris" });
+		var frTime = new Date().toLocaleString("fr-FR", { timeZone: "Europe/Paris" });
 			var new_entry = {
-				date: frTime, // timestamp the value 
-				who: req.body.who,      // identify ESP who provide 
+				date: frTime, // timestamp the value
+				who: req.body.who,      // identify ESP who provide
 				value: req.body.who    // this value
 			};
 		db0.collection("flotte").insertOne(new_entry, function (err, res) {
@@ -192,7 +193,7 @@ client.connect(function (err, mongodbClient) {
 		console.log(req.originalUrl);
 
 		wh = req.query.who // get the "who" param from GET request
-		// => gives the Id of the ESP we look for in the db	
+		// => gives the Id of the ESP we look for in the db
 		wa = req.params.what // get the "what" from the GET request : temp or light ?
 
 		/* 	console.log("\n--------------------------------");
@@ -201,8 +202,8 @@ client.connect(function (err, mongodbClient) {
 			console.log("wants to GET ", wa);
 			console.log("values from object ", wh); */
 
-		const nb = 200; // R�cup�ration des nb derniers samples
-		// stock�s dans la collection associ�e a ce
+		const nb = 200; // Récupération des nb derniers samples
+		// stockés dans la collection associée a ce
 		// topic (wa) et a cet ESP (wh)
 		key = wa
 		//dbo.collection(key).find({who:wh}).toArray(function(err,result) {
