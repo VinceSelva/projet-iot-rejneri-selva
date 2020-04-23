@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <router-link class="nav" v-if="authenticated" to="/accueil">Acceuil</router-link>
-    <router-link class="nav" v-if="authenticated" to="/graphiques">Voir les graphiques</router-link>
-    <router-link class="nav" v-if="authenticated" to="/piscine">Voir la piscine</router-link>
-    <router-link class="nav" v-if="authenticated" to="/poulailler">Voir le poulailler</router-link>
-    <router-link class="nav" v-if="authenticated" to="/" v-on:click.native="logout()" replace>Logout</router-link>
-    
+    <md-toolbar v-if="authenticated">
+      <router-link class="md-title nav" v-if="authenticated" to="/accueil">Accueil</router-link>
+      <router-link class="md-title nav" v-if="authenticated" to="/piscine">Voir la piscine</router-link>
+      <router-link class="md-title nav" v-if="authenticated" to="/poulailler">Voir le poulailler</router-link>
+      <router-link class="md-title nav" v-if="authenticated" to="/graphiques">Voir les graphiques</router-link>
+      <h3 class="nav-right2" v-if="authenticated" v-on:click="test()">Bonjour {{ identifiants.username }}</h3>
+      <!--<router-link class="md-title nav-right1" v-if="authenticated" to="/" v-on:click.native="logout()" replace>Se déconnecter</router-link>-->
+    </md-toolbar>
     <router-view @authenticated="setAuthenticated" />
-
   </div>
+  
 </template>
 
 
@@ -35,6 +37,9 @@
             },
             logout() {
                 this.authenticated = false;
+            },
+            test(){
+              alert("test");
             }
         }
     }
@@ -48,10 +53,30 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
- nav {
-    padding: 100px;
+h1{
+  font-size: 40px;
+}
+
+.md-toolbar{
+  padding: 500px;
+}
+
+.nav{
+  padding-right:50px;
+}
+
+.nav:hover{
+  color:red;
+}
+
+.nav-right1 {
+    margin-left: 46% !important;
  }
+ .nav-right2 {
+    margin-left: 46% !important;
+    cursor: pointer;
+ }
+ 
 </style>
