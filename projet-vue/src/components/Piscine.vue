@@ -23,12 +23,14 @@
         <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">Allumer la led</md-button>
         <br>
         <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">Eteindre la led</md-button>
+        <p> Etat de la lumière : {{etatLumiere}} </p>
       </div>
       <div class="voletPiscine">
         <p> Gestion du volet </p>
         <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">Ouvrir la piscine</md-button>
         <br>
         <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">Fermer la piscine</md-button>
+        <p> Etat du volet : {{etatVolet}} </p>
       </div>
      </div> 
   </div>
@@ -44,6 +46,8 @@ export default {
       states: [],
       lastTemp: null,
       lastLuminosite: null,
+      etatLumiere: "Eteinte",
+      etatVolet: "Fermé",
       node_url: "http://localhost:3000",
       which_esps: [
         "30:AE:A4:86:C3:20",
@@ -161,9 +165,11 @@ export default {
       //console.log("test " + path + " : " + val);
 
       if(path == "/esp/light" && val >= 1000){
+        this.etatVolet = "Ouvert";
         console.log("Ouvrir piscine");
       }
       else if (path == "/esp/light" && val < 1000){
+        this.etatVolet = "Fermé";
         console.log("Fermé piscine");
       }
       if(path == "/esp/temp" && val >= 26){

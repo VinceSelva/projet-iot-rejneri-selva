@@ -23,20 +23,24 @@
         <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">Ouvrir le poulailler</md-button>
         <br>
         <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">Fermer le poulailler</md-button>
+        <p>Etat du poulailler : {{etatPoulailler}}</p>
 
       </div>
 
       <div class="mangerPoulailler">
-        <p> Gestion nourriture </p>
-        <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">Je sais pas quoi</md-button>
-        <p> BlaBla </p>
-        <p> BlaBla </p>
-        <p> BlaBla </p>
-        <p> BlaBla </p>
-        <p> BlaBla </p>
+        <p> Gestion de la nourriture  </p>
+          <md-button class="md-primary md-raised" v-on:click="nourrir += 1">Nourrir les poules</md-button>
+        <p>Les poules ont été nourrit {{ nourrir }} fois.</p>
       </div>
 
-  </div>
+      <div class="oeufPoulailler">
+        <p> Gestion des œufs  </p>
+          <md-button class="md-primary md-raised" v-on:click="oeufs += 1">Forcer la ponte</md-button>
+        <p>Nombre d'oeufs pondus : {{ oeufs }}</p>
+
+      </div>
+
+      </div>
 </template>
 
 <script>
@@ -48,6 +52,9 @@ export default {
       states: [],
       lastTemp: null,
       lastLuminosite: null,
+      etatPoulailler: "Fermé",
+      oeufs: 0,
+      nourrir: 0,
       node_url: "http://localhost:3000",
       which_esps: [
         "30:AE:A4:86:C3:20",
@@ -194,15 +201,18 @@ h1{
 }
 .ledPoulailler{
   font-size: 25px;
-  float: left;
-  margin-top: 300px;
-  margin-left: 100px;
+  margin-top: 400px;
+  margin-right: 1200px;
 }
 .mangerPoulailler{
   font-size: 25px;
-  float: right;
-  margin-top: 300px;
-  margin-right: 100px;
+  margin-top: -165px;
+}
+
+.oeufPoulailler{
+  font-size: 25px;
+  margin-top: -165px;
+  margin-left: 1200px;
 }
 
 
