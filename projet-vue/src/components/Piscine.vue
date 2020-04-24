@@ -1,45 +1,36 @@
 <template>
   <div>
-    <h1> Bienvenue sur la piscine </h1>
+    <h1> Bienvenue sur votre piscine </h1>
+    <div id="Piscine">
       <div class="contentPiscine">
-        <p>Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. 
-        Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des 
-        morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi 
-        adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la 
-        vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de 
-        mise en page de texte, comme Aldus PageMaker.
+        <p>Voici votre page Piscine.
+          Ici vous avez accès à la température de l'eau, ainsi que la luminosité ambiante.
         </p>
         <p>
-        Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. 
-        Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des 
-        morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi 
-        adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la 
-        vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de 
-        mise en page de texte, comme Aldus PageMaker.</p>
+          Grâce aux boutons ci-dessous, vous pouvez fermer le volet de manière manuelle. Dans tous les cas, votre volet se ferme le soir quand la luminosité baisse, et il s'ouvre le matin au levé du soleil.
+          Le deuxième bouton permet d'allumer les lumières présentes aux alentours de votre piscine.
+        </p>
       </div>
+      <div class="infoPiscine">
+        <p id="temp">Température de l'eau : <span id="valeur">{{lastTemp}}</span> °C</p>
+        <p id="lum">Luminosité : <span id="valeur">{{lastLuminosite}}</span> Lum</p>
 
+      </div>
+    </div>
+    <div id="boutons">
       <div class="ledPiscine">
-        <p> Led </p>
+        <p> Lumières ambiante </p>
         <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">Allumer la led</md-button>
         <br>
         <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">Eteindre la led</md-button>
       </div>
-
-      <div class="tempPiscine">
-        <p> Gestion de la piscine </p>
-
-        <p id="">Température de l'eau : {{lastTemp}} °C</p>
-        <p id="">Luminosité : {{lastLuminosite}} Lum</p>
-
-      </div>
-
       <div class="voletPiscine">
         <p> Gestion du volet </p>
         <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">Ouvrir la piscine</md-button>
         <br>
         <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">Fermer la piscine</md-button>
       </div>
-
+     </div> 
   </div>
 </template>
 
@@ -130,14 +121,17 @@ export default {
     },
     lastValue(path, val){
        if(path == "/esp/temp"){
-                      //document.getElementById("temp").innerHTML = "La Température est de " + val + "°C";
-            this.lastTemp = val;
+          //document.getElementById("temp").innerHTML = "La Température est de " + val + "°C";
+          this.lastTemp = val;
        }
        if(path == "/esp/light"){
-                      //document.getElementById("light").innerHTML = "La Lumiere est de " + val + " lumen";
-            this.lastLuminosite = val;
+          //document.getElementById("light").innerHTML = "La Lumiere est de " + val + " lumen";
+          this.lastLuminosite = val;
        }
+       this.test(path, val);
        console.log("Last " + path + " : " + val);
+
+
     },
 
     get_states(path_on_node, serie, wh) {
@@ -163,6 +157,19 @@ export default {
 
         });
     },
+    test(path, val){
+      //console.log("test " + path + " : " + val);
+
+      if(path == "/esp/light" && val >= 1000){
+        console.log("Ouvrir piscine");
+      }
+      else if (path == "/esp/light" && val < 1000){
+        console.log("Fermé piscine");
+      }
+      if(path == "/esp/temp" && val >= 26){
+        alert("Allez vous baignez !");
+      }
+    }
 
 
 
@@ -176,29 +183,41 @@ h1{
   font-size: 40px;
 }
 
-.ledPiscine{
-  font-size: 25px;
-  float: left;
-  margin-top: 300px;
-  margin-left: 100px;
+#temp, #lum{
+  background: #448aff;
+  padding:20px;
+  color:white;
+  border-radius: 5px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
-.tempPiscine{
-  font-size: 25px;
+#valeur{
+  font-weight: bold;
+}
+.contentPiscine{
+  font-size:20px;
+  float: left;
+  width: 50%;
+  padding-left: 5%;
+}
+.infoPiscine{
+  font-size: 20px;
   float: right;
-  margin-top: 300px;
-  margin-right: 100px;
+  width: 50%;
 }
 
 .voletPiscine{
   font-size: 25px;
-  margin-top: 300px;
-  margin-right: 100px;
+  margin-top: 5%;
+}
+.ledPiscine{
+  font-size: 25px;
+  margin-top: 20%
+}
+#boutons{
+  margin-top: 10%
+
 }
 
-
-.contentPiscine{
-  font-size: 18px;
-  text-align: center;
-}
 </style>

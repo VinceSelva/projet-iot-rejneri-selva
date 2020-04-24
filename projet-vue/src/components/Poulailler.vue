@@ -1,6 +1,22 @@
 <template>
   <div>
     <h1> Bienvenue sur le poulailler </h1>
+      <div id="Poulailler">
+        <div class="contentPoulailler">
+          <p>Voici votre page Poulailler.
+            Ici vous avez accès à la température à l'intérieur du poulailler, ainsi que la luminosité ambiante.
+          </p>
+          <p>
+            Grâce aux boutons ci-dessous, vous pouvez fermer le poulailler de manière manuelle. Dans tous les cas, votre poulailler se ferme le soir quand la luminosité baisse, et il s'ouvre le matin au levé du soleil. Au moins les poules ne restent pas enfermé toutes la journée.
+            Le deuxième bouton permet d'allumer une lampe si vous voulez allez voir le poulailler la nuit.
+          </p>
+        </div>
+        <div class="infoPoulailler">
+          <p id="temp">Température : <span id="valeur">{{lastTemp}}</span> °C</p>
+          <p id="lum">Luminosité : <span id="valeur">{{lastLuminosite}}</span> Lum</p>
+
+        </div>
+      </div>
 
       <div class="ledPoulailler">
         <p> Gestion du poulailler </p>
@@ -18,14 +34,6 @@
         <p> BlaBla </p>
         <p> BlaBla </p>
         <p> BlaBla </p>
-      </div>
-
-      <div class="mangerPoulailler">
-        <p> Gestion de la piscine </p>
-
-        <p id="">Température de l'eau : {{lastTemp}} °C</p>
-        <p id="">Luminosité : {{lastLuminosite}} Lum</p>
-
       </div>
 
   </div>
@@ -162,7 +170,28 @@ export default {
 h1{
   font-size: 40px;
 }
-
+#valeur{
+  font-weight: bold;
+}
+.contentPoulailler{
+  font-size:20px;
+  float: left;
+  width: 50%;
+  padding-left: 5%;
+}
+.infoPoulailler{
+  font-size: 20px;
+  float: right;
+  width: 50%;
+}
+#temp, #lum{
+  background: #448aff;
+  padding:20px;
+  color:white;
+  border-radius: 5px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
 .ledPoulailler{
   font-size: 25px;
   float: left;

@@ -1,5 +1,13 @@
 <template>
   <div class="hello">
+    <h1> Bienvenue sur les graphiques </h1>
+      <div id="Graphique">
+        <div class="contentGraphique">
+          <p>Voici votre page Graphiques.
+            Ici vous avez accès à la température et à la luminosité en temps réel.
+          </p>
+        </div>
+      </div>
     <h1>{{ msg }}</h1>
     <div id="app">
        <label for="MAC">Adresse MAC:</label>
