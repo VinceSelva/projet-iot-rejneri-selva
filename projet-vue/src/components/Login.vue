@@ -31,11 +31,18 @@
             login() {
                 //Si l'utilisateur remplit les champs identifiants
                 if(this.input.username != "" && this.input.password != "") {
+
+                   
                     //Si les identifiants sont bons
                     if(this.input.username == this.$parent.identifiants.username && this.input.password == this.$parent.identifiants.password) {
                         this.$emit("authenticated", true);
-                        this.$router.replace({ name: "Accueil" });
-                    } else {
+                        this.$router.push("/accueil")
+                    }
+                    else if (this.input.username == this.$parent.identifiants.usernameUser && this.input.password == this.$parent.identifiants.passwordUser) {
+                        this.$emit("authenticatedUser", true);
+                        this.$router.push("/graphiques")
+                    }
+                    else {
                         console.log("Mot de passe incorrect !");
                         alert("Mot de passe incorrect !");
                     }
@@ -56,6 +63,7 @@
         margin: auto;
         margin-top: 200px;
         padding: 20px;
+        
     }
     
 </style>

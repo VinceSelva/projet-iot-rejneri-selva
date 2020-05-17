@@ -1,4 +1,4 @@
-let node_url = 'http://localhost:3000';
+let node_url = 'http://51.210.15.67:3000';
 window.onload = function init() {
 
     console.log("Test");
@@ -115,7 +115,7 @@ window.onload = function init() {
 
     }
     function get_samples(path_on_node, serie, wh){
-        node_url = 'http://localhost:3000'
+        node_url = 'http://51.210.15.67:3000'
         $.ajax({
             url: node_url.concat(path_on_node), // URL to "GET" : /esp/temp ou /esp/light
             type: 'GET',
@@ -138,7 +138,7 @@ window.onload = function init() {
     }
 
           /*  function get_samples(path_on_node, serie, wh){
-            node_url = 'http://localhost:3000'
+            node_url = 'http://51.210.15.67:3000'
 
             $.ajax({
                     url: node_url.concat(path_on_node), // URL to "GET" : /esp/temp ou /esp/light ou /esp/hum
@@ -214,7 +214,7 @@ window.onload = function init() {
     //=== Gestion de la flotte d'ESP =================================
 
     var which_esps = ["30:AE:A4:86:C3:20",
-              "30:AE:A4:86:CA:7C"
+              "30:AE:A4:86:CA:7C","30:AE:A4:86:C3:20"
             ]
     for (var i = 0; i < which_esps.length; i++) {
 	process_esp(which_esps, i)

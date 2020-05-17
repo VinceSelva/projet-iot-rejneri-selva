@@ -110,7 +110,7 @@ client.connect(function (err, mongodbClient) {
 			console.log("MQTT msg on topic : ", topic.toString());
 			console.log("Msg payload : ", message.toString());
 
-		const flotte = await dbo.collection('flotte').find({}).toArray();
+		// const flotte = await dbo.collection('flotte').find({}).toArray();
 		const topicname = path.parse(topic.toString()).base;
 
 		// Parsing du message supposé recu au format JSON
@@ -118,7 +118,7 @@ client.connect(function (err, mongodbClient) {
 		wh = message.who
 		val = message.value
 
-		if (flotte.findIndex(object => object.who == wh) !== -1 || topicname === "flotte") {
+		//if (flotte.findIndex(object => object.who == wh) !== -1 || topicname === "flotte") {
 
 			// Debug : Gerer une liste de who pour savoir qui utilise le node server
 			let wholist = []
@@ -127,8 +127,8 @@ client.connect(function (err, mongodbClient) {
 				wholist.push({ who: wh });
 			}
 			//	console.log("wholist using the node server :", wholist);
-			var frTime = new Date().toLocaleString("fr-FR", {timeZone: "Europe/Paris"});
-			//var frTime = new Date().toLocaleString("sv-SE", { timeZone: "Europe/Paris" });
+			//var frTime = new Date().toLocaleString("fr-FR", {timeZone: "Europe/Paris"});
+			var frTime = new Date().toLocaleString("sv-SE", { timeZone: "Europe/Paris" });
 			var new_entry = {
 				date: frTime, // timestamp the value
 				who: wh,      // identify ESP who provide
@@ -145,12 +145,12 @@ client.connect(function (err, mongodbClient) {
 			});
 
 			// Debug : voir les collections de la DB
-			dbo.listCollections().toArray(function (err, collInfos) {
-				// collInfos is an array of collection info objects that look like:
-				// { name: 'test', options: {} }
-				// console.log("\nList of collections currently in DB: ", collInfos);
-			});
-		}
+			// dbo.listCollections().toArray(function (err, collInfos) {
+			// 	// collInfos is an array of collection info objects that look like:
+			// 	// { name: 'test', options: {} }
+			// 	// console.log("\nList of collections currently in DB: ", collInfos);
+			// });
+		//}
 	}) // end of 'message' callback installation
 
 
@@ -175,7 +175,7 @@ client.connect(function (err, mongodbClient) {
 	})
 
 	app.post('/flotte', function (req, res) {
-		var frTime = new Date().toLocaleString("fr-FR", { timeZone: "Europe/Paris" });
+		var frTime = new Date().toLocaleString("sv-SE", { timeZone: "Europe/Paris" });
 			var new_entry = {
 				date: frTime, // timestamp the value
 				who: req.body.who,      // identify ESP who provide
@@ -195,14 +195,14 @@ client.connect(function (err, mongodbClient) {
 		wh = req.query.who // get the "who" param from GET request
 		// => gives the Id of the ESP we look for in the db
 		wa = req.params.what // get the "what" from the GET request : temp or light ?
-
+		// wh = "30:AE:A4:86:CA:7C";
 		/* 	console.log("\n--------------------------------");
 			console.log("A client/navigator ", req.ip);
 				console.log("sending URL ",  req.originalUrl);
 			console.log("wants to GET ", wa);
 			console.log("values from object ", wh); */
 
-		const nb = 200; // Récupération des nb derniers samples
+		const nb = 10000; // Récupération des nb derniers samples
 		// stockés dans la collection associée a ce
 		// topic (wa) et a cet ESP (wh)
 		key = wa

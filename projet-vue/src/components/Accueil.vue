@@ -1,8 +1,8 @@
+<!--Vue representant la page Accueil-->
 <template>
   <div>
    <h1>Projet IOT</h1>
    <h2>Clément REJNERI - Vincent SELVA</h2>
-
    <div id="presentation"><p>L'utilisateur connecté pourra contrôler depuis l'interface web différents objets.
       La personne en possession de l’interface web, aura accès à différentes informations. 
       Sur la page des “graphiques”, l’utilisateur aura accès à la température de sa piscine en temps réel ainsi que d’une pièce de sa maison. Il pourra aussi voir la luminosité environnante d'un pièce ou en extérieur.</p>
@@ -15,12 +15,6 @@
 </template>
 
 <script>
-export default {
-  name: 'Accueil',
-  props: {
-    msg: String
-  }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

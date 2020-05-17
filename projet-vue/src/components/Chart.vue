@@ -1,30 +1,41 @@
+
 <template>
   <div>
-    <md-button class="md-primary md-raised" @click="start">Start simulation</md-button>
+    <!--<md-button class="md-primary md-raised" @click="start">Start simulation</md-button>-->
     <br />
     <br />
     <highcharts :options="options" ref="highcharts"></highcharts>
     <highcharts :options="options2" ref="highcharts"></highcharts>
+    <br />
+    <br />
   </div>
-</template>
 
+</template>
 <script>
 import { Chart } from "highcharts-vue";
 import Highcharts from "highcharts";
 import exportingInit from "highcharts/modules/exporting";
 import stockInit from "highcharts/modules/stock";
 
+
 stockInit(Highcharts);
 exportingInit(Highcharts);
 
 var options = {
   chart: {
-    type: "spline"
+    type: "spline",
+    zoomType: 'x',
+    panning: true,
+    panKey: 'shift',
   },
   title: {
     text: "Temperature",
     x: -20 //center
   },
+  subtitle: {
+    text: "Cliquez et faites glisser pour zoomer."
+  },
+
   xAxis: {
     title: {
       text: "Heure"
@@ -35,6 +46,7 @@ var options = {
     title: {
       text: "Temperature (°C)"
     },
+    
     plotLines: [
       {
         value: 0,
@@ -54,30 +66,32 @@ var options = {
   },
   series: [
     {
-      name: "ESP1",
+      name: "Poulailler",
       data: []
     },
     {
-      name: "ESP2",
+      name: "Piscine",
       data: []
     },
     {
-      name: "ESP3",
-      data: []
-    },
-    {
-      name: "ESP4",
+      name: "Invité",
       data: []
     }
   ]
 };
 var options2 = {
   chart: {
-    type: "spline"
+    type: "spline",
+    zoomType: 'x',
+    panning: true,
+    panKey: 'shift'
   },
   title: {
     text: "Lumière",
     x: -20 //center
+  },
+  subtitle: {
+    text: "Cliquez et faites glisser pour zoomer."
   },
   xAxis: {
     title: {
@@ -89,6 +103,27 @@ var options2 = {
     title: {
       text: "Lumen (Lum)"
     },
+    plotBands: [{ // Nuit
+      from: 0,
+      to: 1000,
+      color: 'rgba(68, 138, 255, 0.1)',
+      label: {
+          text: 'NUIT',
+          style: {
+              color: '#000000'
+          }
+      }
+    },{ // Jour
+      from: 1000,
+      to: 5000,
+      color: 'rgba(246, 113, 42, 0.1)',
+      label: {
+          text: 'JOUR',
+          style: {
+              color: '#000000'
+          }
+      }
+    },],
     plotLines: [
       {
         value: 0,
@@ -108,23 +143,20 @@ var options2 = {
   },
   series: [
     {
-      name: "ESP1",
+      name: "Poulailler",
       data: []
     },
     {
-      name: "ESP2",
+      name: "Piscine",
       data: []
     },
     {
-      name: "ESP3",
-      data: []
-    },
-    {
-      name: "ESP4",
+      name: "Invité",
       data: []
     }
   ]
 };
+ 
 export default {
   props: {
     which_esps: Array
@@ -149,6 +181,7 @@ export default {
     };
   },
   mounted(){
+  this.start()
  
   },
   methods: {
@@ -159,7 +192,12 @@ export default {
           color: "#" + ((Math.random() * 0xffffff) | 0).toString(16)
         }
       }); */
-       for (var i = 0; i < this.which_esps.length; i++) {
+      /*which_esps: [
+        "30:AE:A4:86:C3:20",
+        "30:AE:A4:86:CA:7C",
+        ""
+      ];*/
+      for (var i = 0; i < this.which_esps.length; i++) {
           this.process_esp(this.which_esps, i);
         } 
      
@@ -198,10 +236,11 @@ export default {
       // serie => for choosing chart/serie on the page
       // wh => which esp do we want to query data
 
-      this.node_url = "http://localhost:3000";
+      this.node_url = "http://51.210.15.67:3000";
+      //console.log("Test fonction get_samples");
+      var liste = []
+      //wh = "30:AE:A4:86:CA:7C";
 
-      //https://openclassrooms.com/fr/courses/1567926-un-site-web-dynamique-avec-jquery/1569648-le-fonctionnement-de-ajax
-        var liste = []
       let url = this.node_url + path_on_node + "?who=" + wh;
       fetch(url)
         .then(responseJSON => {
@@ -216,9 +255,13 @@ export default {
             });
           }
           serie.data = liste;
-          
+          //console.log("TEST : " +liste)
         });
     }
+
+
+
+
   }
 };
 </script>

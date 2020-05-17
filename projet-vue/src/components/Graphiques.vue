@@ -10,10 +10,11 @@
       </div>
     <h1>{{ msg }}</h1>
     <div id="app">
-       <label for="MAC">Adresse MAC:</label>
-      <input type="text" id="MAC" name="MAC"><br><br>
-      <md-button class="md-accent md-raised" type="button" v-on:click="ajoutMAC()">Ajouter MAC en tant qu'invité</md-button>
+       
       <Chart  :k="componentKey" :which_esps= "which_esps"/>
+      <label for="MAC">Votre adresse MAC : </label>
+      <input type="text" id="MAC" name="MAC"><br><br>
+      <md-button class="md-accent md-raised" type="button" v-on:click="ajoutMAC()">Rejoindre en tant qu'invité</md-button>
     </div>
     <!-- <md-input v-model="name"></md-input>
     <md-button class="md-primary md-raised" v-on:click="addFloat(name)">Add to fleet</md-button>-->
@@ -25,20 +26,13 @@
         <md-table-head md-label="Actions">Action</md-table-head>
       </md-table-row>
       <md-table-row>
-        <md-table-cell md-label="Name">30:AE:A4:86:C3:20</md-table-cell>
-
+        <md-table-cell md-label="Name">Piscine</md-table-cell>
         <md-table-cell md-label="Actions">
-          <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">PING</md-button>
+          <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:CA:7C')">PING</md-button>
         </md-table-cell>
       </md-table-row>
       <md-table-row>
-        <md-table-cell md-label="Name">80:7D:3A:FD:DD:08</md-table-cell>
-        <md-table-cell md-label="Actions">
-          <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">PING</md-button>
-        </md-table-cell>
-      </md-table-row>
-      <md-table-row>
-        <md-table-cell md-label="Name">30:AE:A4:86:CA:7C</md-table-cell>
+        <md-table-cell md-label="Name">Poulailler</md-table-cell>
         <md-table-cell md-label="Actions">
           <md-button class="md-primary md-raised" v-on:click="switchState('30:AE:A4:86:C3:20')">PING</md-button>
         </md-table-cell>
@@ -63,7 +57,7 @@ export default {
   data() {
     return {
       states: [],
-      node_url: "http://localhost:3000",
+      node_url: "http://51.210.15.67:3000",
       which_esps: [
         "30:AE:A4:86:C3:20",
         "30:AE:A4:86:CA:7C",
@@ -102,9 +96,8 @@ export default {
       }
     },
     getStates(path_on_node, serie, wh) {
-      this.node_url = "http://localhost:3000";
-
-      //https://openclassrooms.com/fr/courses/1567926-un-site-web-dynamique-avec-jquery/1569648-le-fonctionnement-de-ajax
+      this.node_url = "http://51.210.15.67:3000";
+      //console.log("Test fonction getStates");
       var liste = [];
       let url = this.node_url + path_on_node + "?who=" + wh;
       fetch(url)
@@ -120,6 +113,7 @@ export default {
             });
           }
           serie.data = liste;
+          //console.log(liste);
         });
     },
 

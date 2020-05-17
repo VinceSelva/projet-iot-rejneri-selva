@@ -5,9 +5,10 @@
       <router-link class="md-title nav" v-if="authenticated" to="/piscine">Voir la piscine</router-link>
       <router-link class="md-title nav" v-if="authenticated" to="/poulailler">Voir le poulailler</router-link>
       <router-link class="md-title nav" v-if="authenticated" to="/graphiques">Voir les graphiques</router-link>
-      <h3 class="nav-right2" v-if="authenticated" v-on:click="test()">Bonjour {{ identifiants.username }}</h3>
+      <h3 class="nav-right2" v-if="authenticated">Bonjour {{ identifiants.username }} !</h3>
       <router-link class="md-title nav-right1" v-if="authenticated" to="/" v-on:click.native="logout()" replace>Se déconnecter</router-link>
     </md-toolbar>
+
     <router-view @authenticated="setAuthenticated" />
   </div>
   
@@ -20,27 +21,35 @@
         data() {
             return {
                 authenticated: false,
+                authenticatedUser: false,
                 identifiants: {
-                    username: "test",
-                    password: "test"
+                    username: "admin",
+                    password: "admin",
+                    usernameUser: "user",
+                    passwordUser: "user"
                 }
             }
         },
         mounted() {
             if(!this.authenticated) {
-                this.$router.replace({ name: "" });
+              this.$router.push("/")
+            }
+            if(!this.authenticatedUser) {
+              this.$router.push("/")
             }
         },
         methods: {
             setAuthenticated(status) {
                 this.authenticated = status;
             },
+            setAuthenticatedUser(status) {
+                this.authenticatedUser = status;
+            },
             logout() {
                 this.authenticated = false;
-            },
-            test(){
-              alert("test");
+                this.authenticatedUser = false;
             }
+    
         }
     }
 </script>
@@ -61,15 +70,19 @@ h1{
 }
 
 .md-toolbar{
-  padding: 500px;
+  padding: 10px !important;
 }
 
 .nav{
-  padding-right:50px;
+  padding:20px;
 }
 
 .nav:hover{
-  color:red;
+  text-decoration: none !important;
+  background-color: #cccccc;
+  color: white !important;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .nav-right1 {
@@ -79,5 +92,6 @@ h1{
     margin-left: 20% !important;
     cursor: pointer;
  }
- 
+
+
 </style>

@@ -10,7 +10,10 @@ import Piscine from "./components/Piscine.vue"
 import Graphiques from "./components/Graphiques.vue"
 import Poulailler from "./components/Poulailler.vue"
 import Login from "./components/Login.vue"
+import VueThermometer from 'vuejs-thermometer'
 
+
+Vue.use(VueThermometer)
 Vue.use(HighchartsVue);
 Vue.use(VueMaterial);
 Vue.config.productionTip = false
